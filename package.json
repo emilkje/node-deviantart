@@ -1,0 +1,20 @@
+{
+  "name": "deviantart",
+  "version": "0.0.1",
+  "description": "DeviantArt API wrapper for node.js",
+  "main": "da.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "deviantart",
+    "api"
+  ],
+  "author": "Emil Kjelsrud <emilkje@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "xml2js": "~0.4.1",
+    "request": "~2.34.0",
+    "lodash": "~2.4.1"
+  }
+}
