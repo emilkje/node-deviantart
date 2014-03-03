@@ -28,4 +28,5 @@ TODO:
 * Improve RSSClient to handle single submissions (data streams etc.)
 * Add sta.sh client for uploads and asset management
 * Mock HTTP-requests in test cases (currently throws timesout on large requests)
+* Move options from submission() to query()
 * More

@@ -3,7 +3,7 @@ var request 	= require('request'),
 	xml2js  	= require('xml2js'),
 	processors 	= require('xml2js/lib/processors'),
 	Emitter 	= require('events').EventEmitter,
-	Submission 	= require('../data/submission.js');
+	Submission 	= require('./data/submission.js');
 
 module.exports = function(){
 
@@ -40,16 +40,17 @@ module.exports = function(){
 				return;
 			}
 
-			//Filter the data items
-			var items = _.filter(data.item, function(item){
+			var filters = require('./filter/submission');
 
-				//Apply medium / submission type filter
+			items = _.filter(data.item, function(item){
+
+				//Apply type / submission medium filter
 				if(options.hasOwnProperty('type')) {
 					if(options.type === 'image') {
-						return item.hasOwnProperty('content') && item.content['$'].medium === 'image';
+						return filters.image(item);
 					}
 					if(options.type === 'note')
-						return item.hasOwnProperty('text');
+						return filters.note(item);
 				}
 
 				return true;
