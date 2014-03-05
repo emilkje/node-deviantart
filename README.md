@@ -21,6 +21,11 @@ Example
 		console.dir(data);
 	});
 
+Test
+----
+
+	npm install -g mocha && npm test
+
 
 TODO:
 -----

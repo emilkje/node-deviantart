@@ -44,5 +44,27 @@ describe('RSSClient', function(){
     		done();
     	});
     });
+
+	it('should return array', function(done) {
+		var client = new da.RSSClient();
+		client.submissions('emilkje', {type: 'note'}, function(err, data){
+			if(err) throw err;
+			if(data instanceof Array === false)
+				throw new Error('Results is not an array');
+
+			done();
+		});
+	});
+
+	it('should return empty array if results are not found', function(done) {
+		var client = new da.RSSClient();
+		client.submissions('emilkje', {type: 'note'}, function(err, data){
+			if(err) throw err;
+			if(data.length > 0)
+				throw new Error('Length of result is: ' + data.length);
+
+			done();
+		});
+	});
   })
 })
