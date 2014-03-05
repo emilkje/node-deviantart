@@ -9,6 +9,8 @@ describe('RSSClient', function(){
 	  var client = new da.RSSClient();
       client.submissions("emilkje", function(err, data){
         if (err) throw err;
+        if(data instanceof Array === false)
+                throw new Error('Results is not an array');
         done();
       });
     });
@@ -32,6 +34,8 @@ describe('RSSClient', function(){
 
     it('should retrieve only notes if option is specified', function(done){
     	var client = new da.RSSClient();
+        this.timeout(3000);
+
     	client.submissions('MoonheartThunderClan', {type: 'note'}, function(err, data){
     		
     		if(err) throw err;
@@ -45,17 +49,7 @@ describe('RSSClient', function(){
     	});
     });
 
-	it('should return array', function(done) {
-		var client = new da.RSSClient();
-		client.submissions('emilkje', {type: 'note'}, function(err, data){
-			if(err) throw err;
-			if(data instanceof Array === false)
-				throw new Error('Results is not an array');
-
-			done();
-		});
-	});
-
+	
 	it('should return empty array if results are not found', function(done) {
 		var client = new da.RSSClient();
 		client.submissions('emilkje', {type: 'note'}, function(err, data){
@@ -66,5 +60,8 @@ describe('RSSClient', function(){
 			done();
 		});
 	});
+
+    /** TODO: Add tests for item attributes **/
+    
   })
 })
