@@ -13,16 +13,17 @@ Install
 Example
 -------
 
-	var da = require('./deviantart'),
-	client = new da.RSSClient;
+	var deviantart = require('deviantart'),
+	client = new deviantart.RSSClient;
 
 	client.submissions('emilkje', {type: 'image'}, function(err, data){
 		if(err) throw err;
 		console.dir(data);
 	});
 
-Test
-----
+
+Testing
+-------
 
 	npm install -g mocha && npm test
 
