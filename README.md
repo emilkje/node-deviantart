@@ -7,7 +7,7 @@ Work in progress.
 Install
 -------
 
-	npm install git+ssh://git@github.com/emilkje/node-deviantart.git
+	npm install git://github.com/emilkje/node-deviantart.git
 
 
 Example
