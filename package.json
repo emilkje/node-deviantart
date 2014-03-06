@@ -2,7 +2,7 @@
   "name": "deviantart",
   "version": "0.0.1",
   "description": "DeviantArt API wrapper for node.js",
-  "main": "da.js",
+  "main": "deviantart.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },

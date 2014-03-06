@@ -1,40 +1,40 @@
-module.exports = function(data) {
+var request = require('request');
 
-	var e = {};
+module.exports = function Submission(data) {
 
-	e.title = data.title[0];
+	this.title = data.title[0];
 	
-	e.link = data.link; 
+	this.link = data.link; 
 	
-	e.perma = data.guid._;
+	this.perma = data.guid._;
 	
-	e.pubdate = data.pubdate;
+	this.pubdate = data.pubdate;
 	
-	e.keywords = data.keywords.split(' ');
+	this.keywords = data.keywords.split(' ');
 	
-	e.rating = data.rating;
+	this.rating = data.rating;
 	
-	e.category = {id: data.category._, label: data.category['$'].label};
+	this.category = {id: data.category._, label: data.category['$'].label};
 	
-	e.credit = {
+	this.credit = {
 		username: data.credit[0]._,
 		avatar: data.credit[1]._,
 		role: data.credit[0]['$'].role
 	};
 	
-	e.copyright = {
+	this.copyright = {
 		text: data.copyright._,
 		url: data.copyright['$'].url
 	};
 	
-	e.license = data.license;
+	this.license = data.license;
 	
-	e.description = {
+	this.description = {
 		content: data.description[0]._.trim(),
 		type: data.description[0]['$'].type
 	};
 
-	e.thumbnail = data.hasOwnProperty('thumbnail') === false ? null : {
+	this.thumbnail = data.hasOwnProperty('thumbnail') === false ? null : {
 		small: {
 			url: data.thumbnail[0]['$'].url,
 			height: data.thumbnail[0]['$'].height,
@@ -52,8 +52,10 @@ module.exports = function(data) {
 		}
 	};
 
-	e.content = data.hasOwnProperty('content') ? data.content['$'] : null;
-	e.text = data.hasOwnProperty('text') ? data.text._ : null;
-
-	return e;
+	this.content = data.hasOwnProperty('content') ? data.content['$'] : null;
+	this.text = data.hasOwnProperty('text') ? data.text._ : null;
 }
+
+module.exports.prototype.stream = function(){
+	return request(this.content.url);
+};
