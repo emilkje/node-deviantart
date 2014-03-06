@@ -77,4 +77,24 @@ describe('RSSClient', function(){
 	});
 
   })
+
+  describe('#images()', function(){
+
+	var client = new da.RSSClient('emilkje');
+    
+    it('should retrieve only images', function(done){
+      client.images(function(err, images){
+        if (err) throw err;
+        if(images instanceof Array === false)
+            throw new Error('Results is not an array');
+
+		images.forEach(function(image){
+			if(!image.hasOwnProperty('content'))
+				throw new Error('Result contains items which could not be identified as an image');
+		});
+        done();
+      });
+    });
+
+  });
 })

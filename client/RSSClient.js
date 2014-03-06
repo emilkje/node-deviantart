@@ -5,7 +5,7 @@ var request 	= require('request'),
 	Emitter 	= require('events').EventEmitter,
 	Submission 	= require('./data/submission.js');
 
-module.exports = function(){
+module.exports = function(username){
 
 	var xmlParser = new xml2js.Parser({
 		explicitRoot: false,
@@ -18,11 +18,33 @@ module.exports = function(){
 	
 	var exports = new Emitter;
 
+	exports.username = username || false;
+
 	exports.query = function(q, cb){
 		request.get('http://backend.deviantart.com/rss.xml?type=deviation&q=' + q + '+sort%3Atime+meta%3Aall', function(req, res){
 			parse(res.body.toString(), function(err, data){
 				cb(err, data.channel);
 			});
+		});
+	};
+
+	exports.images = function(unameOrCb, cb){
+		
+		var username = this.username;
+		
+		if(typeof unameOrCb === "function") {
+			cb = unameOrCb;
+		} else {
+			username = unameOrCb;
+		}
+
+		this.submissions(username, {type: 'image'}, function(err, data){
+			if(err) {
+				cb(err, false);
+				return;
+			}
+
+			cb(false, data);
 		});
 	};
 
