@@ -4,7 +4,7 @@
   "description": "DeviantArt API wrapper for node.js",
   "main": "da.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --reporter spec"
   },
   "keywords": [
     "deviantart",
