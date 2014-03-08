@@ -1,4 +1,5 @@
 var request 	= require('request'),
+	Q 			= require('q'),
 	_ 			= require('lodash'),
 	xml2js  	= require('xml2js'),
 	processors 	= require('xml2js/lib/processors'),
@@ -20,43 +21,26 @@ module.exports = function(username){
 
 	exports.username = username || false;
 
-	exports.query = function(q, cb){
-		request.get('http://backend.deviantart.com/rss.xml?type=deviation&q=' + q + '+sort%3Atime+meta%3Aall', function(req, res){
+	var query = function(query, cb){
+		var url = 'http://backend.deviantart.com/rss.xml?type=deviation&q=' + query + '+sort%3Atime+meta%3Aall';
+
+		request.get(url, function(req, res){
 			parse(res.body.toString(), function(err, data){
+				exports.emit('query', {query: query, url: url, response: data.channel});
 				cb(err, data.channel);
 			});
 		});
 	};
 
-	exports.images = function(unameOrCb, cb){
-		
-		var username = this.username;
-		
-		if(typeof unameOrCb === "function") {
-			cb = unameOrCb;
-		} else {
-			username = unameOrCb;
-		}
-
-		this.submissions(username, {type: 'image'}, function(err, data){
-			if(err) {
-				cb(err, false);
-				return;
-			}
-
-			cb(false, data);
-		});
-	};
-
-	exports.submissions = function(username, objectOrcb, cb) {
+	var submissions = function(username, optionsOrCb, cb) {
 		
 		options = {};
-		if(typeof objectOrcb === "object")
-			options = objectOrcb;
-		if(typeof objectOrcb === "function")
-			cb = objectOrcb;
+		if(typeof optionsOrCb === "object")
+			options = optionsOrCb;
+		if(typeof optionsOrCb === "function")
+			cb = optionsOrCb;
 
-		this.query('by%3A'+username, function(err, data) {
+		query('by%3A'+username, function(err, data) {
 			if(err) {
 				cb(err, false);
 				return;
@@ -86,7 +70,47 @@ module.exports = function(username){
 
 			cb(false, submissions);
 		});
+	};
+
+	exports.submissions = function(optionsOrCb, cb) {
+		
+		var options = {};
+		if(typeof optionsOrCb === "object")
+			options = optionsOrCb;
+		if(typeof optionsOrCb === "function")
+			cb = optionsOrCb;
+
+		submissions(this.username, options, function(err, data) {
+			if(err) {
+				cb(err, false);
+				return;
+			}
+
+			cb(false, data);
+		});
 	}
+
+	exports.images = function(optionsOrCb, cb){
+		
+		var options = {};
+		if(typeof optionsOrCb === "object")
+			options = optionsOrCb;
+		if(typeof optionsOrCb === "function")
+			cb = optionsOrCb;
+
+		options.type = 'image';
+
+		this.submissions(options, function(err, data){
+			if(err) {
+				if(cb)
+					cb(err, false);
+				return;
+			}
+
+			if(cb)
+				cb(false, data);
+		});
+	};
 
 	return exports;
 };

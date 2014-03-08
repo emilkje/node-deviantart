@@ -2,12 +2,12 @@ var da = require('../deviantart.js');
 
 describe('RSSClient', function(){
 
-  var client = new da.RSSClient();
+  var client = new da.RSSClient('emilkje');
 
   describe('#submissions()', function(){
     
     it('should retrieve array without error', function(done){
-      client.submissions("emilkje", function(err, data){
+      client.submissions(function(err, data){
         if (err) throw err;
         if(data instanceof Array === false)
                 throw new Error('Results is not an array');
@@ -16,7 +16,8 @@ describe('RSSClient', function(){
     });
 
     it('should retrieve only images if option is specified', function(done){
-    	client.submissions('emilkje', {type: 'image'}, function(err, data){
+    	
+        client.submissions({type: 'image'}, function(err, data){
     		
     		if(err) throw err;
     		
@@ -34,7 +35,9 @@ describe('RSSClient', function(){
     it('should retrieve only notes if option is specified', function(done){
         this.timeout(3000);
 
-    	client.submissions('MoonheartThunderClan', {type: 'note'}, function(err, data){
+        client.username = "MoonheartThunderClan";
+
+    	client.submissions({type: 'note'}, function(err, data){
     		
     		if(err) throw err;
     		
@@ -42,14 +45,16 @@ describe('RSSClient', function(){
     			if(i.hasOwnProperty('text') === false)
     				throw new Error('No content attribute found');
     		});
-
     		done();
     	});
     });
 
 	
 	it('should return empty array if results are not found', function(done) {
-		client.submissions('emilkje', {type: 'note'}, function(err, data){
+        
+        client.username = "emilkje";
+
+		client.submissions({type: 'note'}, function(err, data){
 			if(err) throw err;
 			if(data.length > 0)
 				throw new Error('Length of result is: ' + data.length);
@@ -59,7 +64,7 @@ describe('RSSClient', function(){
 	});
 
 	it('should return items with a set of defined attributes', function(done) {
-		client.submissions('emilkje', function(err, data){
+		client.submissions(function(err, data){
 			if(err) throw err;
 			data.forEach(function(item){
 				if(!item.hasOwnProperty('title')) throw new Error('Item should have a title');
@@ -79,8 +84,6 @@ describe('RSSClient', function(){
   })
 
   describe('#images()', function(){
-
-	var client = new da.RSSClient('emilkje');
     
     it('should retrieve only images', function(done){
       client.images(function(err, images){
