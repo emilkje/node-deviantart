@@ -25,7 +25,7 @@ Example
 Testing
 -------
 
-	npm install -g mocha && npm test
+	make test
 
 
 TODO:

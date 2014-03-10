@@ -4,7 +4,7 @@
   "description": "DeviantArt API wrapper for node.js",
   "main": "deviantart.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "make test --reporter spec"
   },
   "keywords": [
     "deviantart",
@@ -18,6 +18,7 @@
     "lodash": "~2.4.1"
   },
   "devDependencies": {
-    "longjohn": "~0.2.2"
+    "longjohn": "~0.2.2",
+    "mocha": "~1.17.1"
   }
 }

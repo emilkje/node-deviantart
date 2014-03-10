@@ -1,5 +1,4 @@
 var request 	= require('request'),
-	Q 			= require('q'),
 	_ 			= require('lodash'),
 	xml2js  	= require('xml2js'),
 	processors 	= require('xml2js/lib/processors'),
@@ -21,7 +20,7 @@ module.exports = function(username){
 
 	exports.username = username || false;
 
-	var query = function(query, cb){
+	var request_api = function(query, cb){
 		
 		var options = {
 			url: 'http://backend.deviantart.com/rss.xml?type=deviation&q=' + query + '+sort%3Atime+meta%3Aall',
@@ -31,7 +30,11 @@ module.exports = function(username){
 		}
 		 
 		request.get(options, function(err, res){
-			if(err) throw err;
+			if(err) {
+				cb(err, false);
+				return;
+			}
+
 			parse(res.body.toString(), function(err, data){
 				exports.emit('query', {query: query, url: options.url, response: data.channel});
 				cb(err, data.channel);
@@ -39,7 +42,7 @@ module.exports = function(username){
 		});
 	};
 
-	var submissions = function(username, optionsOrCb, cb) {
+	var query = function(q, optionsOrCb, cb) {
 		
 		options = {};
 		if(typeof optionsOrCb === "object")
@@ -47,7 +50,7 @@ module.exports = function(username){
 		if(typeof optionsOrCb === "function")
 			cb = optionsOrCb;
 
-		query('by%3A'+username, function(err, data) {
+		request_api(q, function(err, data) {
 			if(err) {
 				cb(err, false);
 				return;
@@ -79,7 +82,28 @@ module.exports = function(username){
 		});
 	};
 
+	exports.query = function(q, optionsOrCb, cb) {
+		var options = {};
+		if(typeof optionsOrCb === "object")
+			options = optionsOrCb;
+		if(typeof optionsOrCb === "function")
+			cb = optionsOrCb;
+
+		query(q, options, function(err, data){
+			if(err) {
+				if(cb)
+					cb(err, false);
+				return;
+			}
+
+			if(cb)
+				cb(false, data);
+		});
+	}
+
 	exports.submissions = function(optionsOrCb, cb) {
+		
+		var username = this.username || false;
 		
 		var options = {};
 		if(typeof optionsOrCb === "object")
@@ -87,14 +111,16 @@ module.exports = function(username){
 		if(typeof optionsOrCb === "function")
 			cb = optionsOrCb;
 
-		submissions(this.username, options, function(err, data) {
-			if(err) {
-				cb(err, false);
-				return;
-			}
+		if(options.hasOwnProperty("username"))
+			username = options.username;
 
-			cb(false, data);
-		});
+		if(!username) {
+			if(cb)
+				cb(new Error("No username specified, either pass as an option or instanciate client with username"), false);
+			return;
+		}
+
+		this.query('by%3A'+this.username, optionsOrCb, cb);
 	}
 
 	exports.images = function(optionsOrCb, cb){
@@ -107,16 +133,7 @@ module.exports = function(username){
 
 		options.type = 'image';
 
-		this.submissions(options, function(err, data){
-			if(err) {
-				if(cb)
-					cb(err, false);
-				return;
-			}
-
-			if(cb)
-				cb(false, data);
-		});
+		this.submissions(options, cb);
 	};
 
 	return exports;
