@@ -22,11 +22,18 @@ module.exports = function(username){
 	exports.username = username || false;
 
 	var query = function(query, cb){
-		var url = 'http://backend.deviantart.com/rss.xml?type=deviation&q=' + query + '+sort%3Atime+meta%3Aall';
-
-		request.get(url, function(req, res){
+		
+		var options = {
+			url: 'http://backend.deviantart.com/rss.xml?type=deviation&q=' + query + '+sort%3Atime+meta%3Aall',
+			headers: {
+				'User-Agent': 'deviantART node.js wrapper by emilkje'
+			}
+		}
+		 
+		request.get(options, function(err, res){
+			if(err) throw err;
 			parse(res.body.toString(), function(err, data){
-				exports.emit('query', {query: query, url: url, response: data.channel});
+				exports.emit('query', {query: query, url: options.url, response: data.channel});
 				cb(err, data.channel);
 			});
 		});

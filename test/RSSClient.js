@@ -99,5 +99,20 @@ describe('RSSClient', function(){
       });
     });
 
+    it('should attach content stream accessed by stream()', function(done){
+        var EventEmitter = require('events').EventEmitter;
+        client.images(function(err, images){
+            if(err) throw err;
+            images.forEach(function(i){
+                if(!typeof i.stream == "function")
+                    return new Error("#stream() is not a function");
+
+                if(!i.stream() instanceof EventEmitter)
+                    return new Error("#stream() is not an instance of EventEmitter");
+            });
+
+            done();
+        });
+    });
   });
 })
