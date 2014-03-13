@@ -3,7 +3,8 @@ var request 	= require('request'),
 	xml2js  	= require('xml2js'),
 	processors 	= require('xml2js/lib/processors'),
 	Emitter 	= require('events').EventEmitter,
-	Submission 	= require('./data/submission.js');
+	Submission 	= require('./data/submission'),
+	URIParser = require('./util/URIParser');
 
 module.exports = function(username){
 
@@ -20,23 +21,34 @@ module.exports = function(username){
 
 	exports.username = username || false;
 
-	var request_api = function(query, cb){
+	var request_api = function(query, optionsOrCb, cb){
+
+		options = {};
+		if(typeof optionsOrCb === "object")
+			options = optionsOrCb;
+		if(typeof optionsOrCb === "function")
+			cb = optionsOrCb;
+
+		options.q = query;
 		
-		var options = {
-			url: 'http://backend.deviantart.com/rss.xml?type=deviation&q=' + query + '+sort%3Atime+meta%3Aall',
+
+		var RssResource = URIParser.RssUri(options);
+		
+		var request_options = {
+			url: RssResource,
 			headers: {
 				'User-Agent': 'deviantART node.js wrapper by emilkje'
 			}
 		}
 		 
-		request.get(options, function(err, res){
+		request.get(request_options, function(err, res){
 			if(err) {
 				cb(err, false);
 				return;
 			}
 
 			parse(res.body.toString(), function(err, data){
-				exports.emit('query', {query: query, url: options.url, response: data.channel});
+				exports.emit('query', {query: query, url: request_options.url, response: data.channel});
 				cb(err, data.channel);
 			});
 		});
@@ -50,13 +62,13 @@ module.exports = function(username){
 		if(typeof optionsOrCb === "function")
 			cb = optionsOrCb;
 
-		request_api(q, function(err, data) {
+		request_api(q, options, function(err, data) {
 			if(err) {
 				cb(err, false);
 				return;
 			}
 
-			var filters = require('./filter/submission');
+			var filters = require('./util/submission_filter');
 
 			items = _.filter(data.item, function(item){
 
