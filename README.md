@@ -16,7 +16,7 @@ Example
 	var deviantart = require('deviantart'),
 	client = new deviantart.RSSClient;
 
-	client.submissions('emilkje', {type: 'image'}, function(err, data){
+	client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
 		if(err) throw err;
 		console.dir(data);
 	});
