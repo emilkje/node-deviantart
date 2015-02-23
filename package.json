@@ -1,6 +1,6 @@
 {
   "name": "node-deviantart",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "DeviantArt API wrapper for node.js",
   "main": "deviantart.js",
   "scripts": {
