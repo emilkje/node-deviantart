@@ -7,7 +7,7 @@ Work in progress.
 Install
 -------
 
-	npm install git://github.com/emilkje/node-deviantart.git
+	npm install node-deviantart
 
 
 Example
@@ -35,4 +35,5 @@ TODO:
 * Add sta.sh client for uploads and asset management
 * Mock HTTP-requests in test cases (currently throws timesout on large requests)
 * Move options from submission() to query()
+* More documentation
 * More
