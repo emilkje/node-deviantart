@@ -1,5 +1,5 @@
 {
-  "name": "deviantart",
+  "name": "node-deviantart",
   "version": "0.0.1",
   "description": "DeviantArt API wrapper for node.js",
   "main": "deviantart.js",
