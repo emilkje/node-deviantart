@@ -50,7 +50,7 @@ module.exports = function(username){
 			parse(res.body.toString(), function(err, data){
 				var channel = (data ? (data.hasOwnProperty('channel') ? data.channel : null) : null);
 				exports.emit('query', {query: query, url: request_options.url, response: channel});
-				cb(err, data.channel);
+				cb(err, channel);
 			});
 		});
 	};
