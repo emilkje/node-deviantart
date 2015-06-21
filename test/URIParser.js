@@ -1,5 +1,5 @@
 
-var parser = require('../client/util/URIParser'),
+var parser = require('../src/client/util/URIParser'),
 		assert = require("assert");
 
 describe('URIParser', function(){

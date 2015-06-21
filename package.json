@@ -2,7 +2,7 @@
   "name": "node-deviantart",
   "version": "1.0.2",
   "description": "DeviantArt API wrapper for node.js",
-  "main": "deviantart.js",
+  "main": "src/deviantart.js",
   "scripts": {
     "test": "make test"
   },
