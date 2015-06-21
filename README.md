@@ -1,5 +1,5 @@
 
-deviantART API wrapper in Node.js
+deviantART API wrapper in Node.js ![Build status](https://api.travis-ci.org/emilkje/node-deviantart.svg?branch=master)
 =================================
 
 Work in progress.
