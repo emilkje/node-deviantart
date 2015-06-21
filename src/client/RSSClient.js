@@ -48,7 +48,8 @@ module.exports = function(username){
 			}
 
 			parse(res.body.toString(), function(err, data){
-				exports.emit('query', {query: query, url: request_options.url, response: data.channel});
+				var channel = data.hasOwnProperty('channel') ? data.channel : null;
+				exports.emit('query', {query: query, url: request_options.url, response: channel});
 				cb(err, data.channel);
 			});
 		});
