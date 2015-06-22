@@ -4,26 +4,45 @@ Object.defineProperty(exports, '__esModule', {
 	value: true
 });
 exports.RSSClient = RSSClient;
-var request = require('request'),
-    _ = require('lodash'),
-    xml2js = require('xml2js'),
-    processors = require('xml2js/lib/processors'),
-    Emitter = require('events').EventEmitter,
-    Submission = require('./data/submission'),
-    URIParser = require('./util/URIParser');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _request = require('request');
+
+var _request2 = _interopRequireDefault(_request);
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _xml2js = require('xml2js');
+
+var _xml2js2 = _interopRequireDefault(_xml2js);
+
+var _xml2jsLibProcessors = require('xml2js/lib/processors');
+
+var _xml2jsLibProcessors2 = _interopRequireDefault(_xml2jsLibProcessors);
+
+var _events = require('events');
+
+var _dataSubmission = require('./data/submission');
+
+var _dataSubmission2 = _interopRequireDefault(_dataSubmission);
+
+var _utilURIParser = require('./util/URIParser');
+
+var _utilURIParser2 = _interopRequireDefault(_utilURIParser);
 
 function RSSClient(username) {
 
-	var xmlParser = new xml2js.Parser({
+	var xmlParser = new _xml2js2['default'].Parser({
 		explicitRoot: false,
 		normalizeTags: true,
 		explicitArray: false,
-		tagNameProcessors: [processors.stripPrefix]
+		tagNameProcessors: [_xml2jsLibProcessors2['default'].stripPrefix]
 	});
 
-	var parse = xmlParser.parseString;
-
-	var exports = new Emitter();
+	var exports = new _events.EventEmitter();
 
 	exports.username = username || false;
 
@@ -35,7 +54,7 @@ function RSSClient(username) {
 
 		options.q = query;
 
-		var RssResource = URIParser.RssUri(options);
+		var RssResource = _utilURIParser2['default'].RssUri(options);
 
 		var request_options = {
 			url: RssResource,
@@ -44,13 +63,13 @@ function RSSClient(username) {
 			}
 		};
 
-		request.get(request_options, function (err, res) {
+		_request2['default'].get(request_options, function (err, res) {
 			if (err) {
 				cb(err, false);
 				return;
 			}
 
-			parse(res.body.toString(), function (err, data) {
+			xmlParser.parseString(res.body.toString(), function (err, data) {
 				var channel = data ? data.hasOwnProperty('channel') ? data.channel : null : null;
 				exports.emit('query', { query: query, url: request_options.url, response: channel });
 				cb(err, channel);
@@ -72,7 +91,7 @@ function RSSClient(username) {
 
 			var filters = require('./util/submission_filter');
 
-			var items = _.filter(data.item, function (item) {
+			var items = _lodash2['default'].filter(data.item, function (item) {
 
 				//Apply type / submission medium filter
 				if (options.hasOwnProperty('type')) {
@@ -87,7 +106,7 @@ function RSSClient(username) {
 
 			var submissions = [];
 			items.forEach(function (raw_item) {
-				var submission = new Submission(raw_item);
+				var submission = new _dataSubmission2['default'](raw_item);
 				submissions.push(submission);
 			});
 

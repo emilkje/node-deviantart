@@ -1,21 +1,19 @@
-var request 	= require('request'),
-	_ 			= require('lodash'),
-	xml2js  	= require('xml2js'),
-	processors 	= require('xml2js/lib/processors'),
-	Emitter 	= require('events').EventEmitter,
-	Submission 	= require('./data/submission'),
-	URIParser = require('./util/URIParser');
+import request 		from 'request'
+import _ 					from 'lodash'
+import xml2js  		from 'xml2js'
+import processors from 'xml2js/lib/processors'
+import {EventEmitter as Emitter} 	from 'events'
+import Submission from './data/submission'
+import URIParser 	from './util/URIParser'
 
 export function RSSClient(username) {
 
-	var xmlParser = new xml2js.Parser({
+	let xmlParser = new xml2js.Parser({
 		explicitRoot: false,
 		normalizeTags: true,
 		explicitArray: false,
 		tagNameProcessors: [processors.stripPrefix]
 	});
-
-	var parse = xmlParser.parseString;
 
 	var exports = new Emitter;
 
@@ -47,7 +45,7 @@ export function RSSClient(username) {
 				return;
 			}
 
-			parse(res.body.toString(), function(err, data){
+			xmlParser.parseString(res.body.toString(), function(err, data){
 				var channel = (data ? (data.hasOwnProperty('channel') ? data.channel : null) : null);
 				exports.emit('query', {query: query, url: request_options.url, response: channel});
 				cb(err, channel);
