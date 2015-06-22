@@ -3,9 +3,16 @@
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-exports.RSSClient = RSSClient;
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 var _request = require('request');
 
@@ -33,130 +40,71 @@ var _utilURIParser = require('./util/URIParser');
 
 var _utilURIParser2 = _interopRequireDefault(_utilURIParser);
 
-function RSSClient(username) {
+var _utilQuery = require('./util/query');
 
-	var xmlParser = new _xml2js2['default'].Parser({
-		explicitRoot: false,
-		normalizeTags: true,
-		explicitArray: false,
-		tagNameProcessors: [_xml2jsLibProcessors2['default'].stripPrefix]
-	});
+var _utilQuery2 = _interopRequireDefault(_utilQuery);
 
-	var exports = new _events.EventEmitter();
+var _utilRequest_api = require('./util/request_api');
 
-	exports.username = username || false;
+var _utilRequest_api2 = _interopRequireDefault(_utilRequest_api);
 
-	var request_api = function request_api(query, optionsOrCb, cb) {
+var submissions = function submissions(username, optionsOrCb, cb) {
 
-		var options = {};
-		if (typeof optionsOrCb === 'object') options = optionsOrCb;
-		if (typeof optionsOrCb === 'function') cb = optionsOrCb;
+	var options = {};
+	if (typeof optionsOrCb === 'object') options = optionsOrCb;
+	if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
-		options.q = query;
+	if (options.hasOwnProperty('username')) username = options.username;
 
-		var RssResource = _utilURIParser2['default'].RssUri(options);
+	if (!username) {
+		if (cb) cb(new Error('No username specified, either pass as an option or instanciate client with username'), false);
+		return;
+	}
 
-		var request_options = {
-			url: RssResource,
-			headers: {
-				'User-Agent': 'deviantART node.js wrapper by emilkje'
-			}
-		};
+	(0, _utilQuery2['default'])('by%3A' + username, optionsOrCb, cb);
+};
 
-		_request2['default'].get(request_options, function (err, res) {
-			if (err) {
-				cb(err, false);
-				return;
-			}
+var RSSClient = (function (_Emitter) {
+	function RSSClient(username) {
+		_classCallCheck(this, RSSClient);
 
-			xmlParser.parseString(res.body.toString(), function (err, data) {
-				var channel = data ? data.hasOwnProperty('channel') ? data.channel : null : null;
-				exports.emit('query', { query: query, url: request_options.url, response: channel });
-				cb(err, channel);
-			});
-		});
-	};
+		var emitter = _get(Object.getPrototypeOf(RSSClient.prototype), 'constructor', this).call(this);
+		this.username = username || false;
+	}
 
-	var query = function query(q, optionsOrCb, cb) {
+	_inherits(RSSClient, _Emitter);
 
-		var options = {};
-		if (typeof optionsOrCb === 'object') options = optionsOrCb;
-		if (typeof optionsOrCb === 'function') cb = optionsOrCb;
+	_createClass(RSSClient, [{
+		key: 'query',
+		value: function query(q, optionsOrCb, cb) {
+			var options = {};
+			if (typeof optionsOrCb === 'object') options = optionsOrCb;
+			if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
-		request_api(q, options, function (err, data) {
-			if (err) {
-				cb(err, false);
-				return;
-			}
-
-			var filters = require('./util/submission_filter');
-
-			var items = _lodash2['default'].filter(data.item, function (item) {
-
-				//Apply type / submission medium filter
-				if (options.hasOwnProperty('type')) {
-					if (options.type === 'image') {
-						return filters.image(item);
-					}
-					if (options.type === 'note') return filters.note(item);
+			(0, _utilQuery2['default'])(q, options, function (err, data) {
+				if (err) {
+					if (cb) cb(err, false);
+					return;
 				}
 
-				return true;
+				if (cb) cb(false, data);
 			});
-
-			var submissions = [];
-			items.forEach(function (raw_item) {
-				var submission = new _dataSubmission2['default'](raw_item);
-				submissions.push(submission);
-			});
-
-			cb(false, submissions);
-		});
-	};
-
-	exports.query = function (q, optionsOrCb, cb) {
-		var options = {};
-		if (typeof optionsOrCb === 'object') options = optionsOrCb;
-		if (typeof optionsOrCb === 'function') cb = optionsOrCb;
-
-		query(q, options, function (err, data) {
-			if (err) {
-				if (cb) cb(err, false);
-				return;
-			}
-
-			if (cb) cb(false, data);
-		});
-	};
-
-	exports.submissions = function (optionsOrCb, cb) {
-
-		var username = this.username || false;
-
-		var options = {};
-		if (typeof optionsOrCb === 'object') options = optionsOrCb;
-		if (typeof optionsOrCb === 'function') cb = optionsOrCb;
-
-		if (options.hasOwnProperty('username')) username = options.username;
-
-		if (!username) {
-			if (cb) cb(new Error('No username specified, either pass as an option or instanciate client with username'), false);
-			return;
 		}
+	}, {
+		key: 'images',
+		value: function images(optionsOrCb, cb) {
 
-		this.query('by%3A' + this.username, optionsOrCb, cb);
-	};
+			var options = {};
+			if (typeof optionsOrCb === 'object') options = optionsOrCb;
+			if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
-	exports.images = function (optionsOrCb, cb) {
+			options.type = 'image';
+			options.username = this.username || false;
+			submissions(options.username, options, cb);
+		}
+	}]);
 
-		var options = {};
-		if (typeof optionsOrCb === 'object') options = optionsOrCb;
-		if (typeof optionsOrCb === 'function') cb = optionsOrCb;
+	return RSSClient;
+})(_events.EventEmitter);
 
-		options.type = 'image';
-
-		this.submissions(options, cb);
-	};
-
-	return exports;
-}
+exports.RSSClient = RSSClient;

@@ -1,5 +1,4 @@
-
-module.exports = {
+export default var filters {
 
 	image: function(item) {
 		return item.hasOwnProperty('content') && item.content['$'].medium === 'image';

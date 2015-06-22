@@ -1,6 +1,9 @@
 'use strict';
 
-module.exports = {
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+exports['default'] = {
 
 	image: function image(item) {
 		return item.hasOwnProperty('content') && item.content['$'].medium === 'image';
@@ -11,3 +14,4 @@ module.exports = {
 	}
 
 };
+module.exports = exports['default'];

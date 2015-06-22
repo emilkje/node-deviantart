@@ -1,10 +1,9 @@
 var RSSClient = require('../').RSSClient;
 var fs = require('fs');
-
-
 var user = process.argv[2] || 'emilkje';
 var client = new RSSClient(user);
 
+console.log(client);
 
 var mkdirSync = function(path) {
 	try {
