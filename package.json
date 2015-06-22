@@ -2,9 +2,10 @@
   "name": "node-deviantart",
   "version": "1.0.2",
   "description": "DeviantArt API wrapper for node.js",
-  "main": "src/deviantart.js",
+  "main": "dist/deviantart.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "start": "babel src --watch --out-dir dist"
   },
   "keywords": [
     "deviantart",
@@ -18,6 +19,7 @@
     "lodash": "~2.4.1"
   },
   "devDependencies": {
+    "babel": "^5.6.4",
     "longjohn": "~0.2.2",
     "mocha": "~1.17.1"
   }

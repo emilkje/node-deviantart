@@ -6,7 +6,7 @@ var request 	= require('request'),
 	Submission 	= require('./data/submission'),
 	URIParser = require('./util/URIParser');
 
-module.exports = function(username){
+export function RSSClient(username) {
 
 	var xmlParser = new xml2js.Parser({
 		explicitRoot: false,
@@ -16,31 +16,31 @@ module.exports = function(username){
 	});
 
 	var parse = xmlParser.parseString;
-	
+
 	var exports = new Emitter;
 
 	exports.username = username || false;
 
 	var request_api = function(query, optionsOrCb, cb){
 
-		options = {};
+		let options = {};
 		if(typeof optionsOrCb === "object")
 			options = optionsOrCb;
 		if(typeof optionsOrCb === "function")
 			cb = optionsOrCb;
 
 		options.q = query;
-		
+
 
 		var RssResource = URIParser.RssUri(options);
-		
+
 		var request_options = {
 			url: RssResource,
 			headers: {
 				'User-Agent': 'deviantART node.js wrapper by emilkje'
 			}
 		}
-		 
+
 		request.get(request_options, function(err, res){
 			if(err) {
 				cb(err, false);
@@ -56,8 +56,8 @@ module.exports = function(username){
 	};
 
 	var query = function(q, optionsOrCb, cb) {
-		
-		options = {};
+
+		let options = {};
 		if(typeof optionsOrCb === "object")
 			options = optionsOrCb;
 		if(typeof optionsOrCb === "function")
@@ -69,9 +69,9 @@ module.exports = function(username){
 				return;
 			}
 
-			var filters = require('./util/submission_filter');
+			let filters = require('./util/submission_filter');
 
-			items = _.filter(data.item, function(item){
+			let items = _.filter(data.item, function(item){
 
 				//Apply type / submission medium filter
 				if(options.hasOwnProperty('type')) {
@@ -115,9 +115,9 @@ module.exports = function(username){
 	}
 
 	exports.submissions = function(optionsOrCb, cb) {
-		
+
 		var username = this.username || false;
-		
+
 		var options = {};
 		if(typeof optionsOrCb === "object")
 			options = optionsOrCb;
@@ -137,7 +137,7 @@ module.exports = function(username){
 	}
 
 	exports.images = function(optionsOrCb, cb){
-		
+
 		var options = {};
 		if(typeof optionsOrCb === "object")
 			options = optionsOrCb;
@@ -150,4 +150,4 @@ module.exports = function(username){
 	};
 
 	return exports;
-};
+}

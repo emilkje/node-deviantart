@@ -1,9 +1,12 @@
-var user = process.argv[2] || 'emilkje',
-da = require('../'),
-client = new da.RSSClient(user),
-fs = require('fs');
+var RSSClient = require('../').RSSClient;
+var fs = require('fs');
 
-var mkdirSync = function (path) {
+
+var user = process.argv[2] || 'emilkje';
+var client = new RSSClient(user);
+
+
+var mkdirSync = function(path) {
 	try {
 		fs.mkdirSync(path);
 	} catch(e) {
@@ -16,9 +19,9 @@ client.images(function(err, images){
 		console.dir(err);
 	}
 
-	images.forEach(function(image){
+	images.forEach( function(image) {
 		mkdirSync('images');
-		image.stream().pipe(fs.createWriteStream(__dirname+'/images/'+image.title+"_by_"+image.copyright.text+'.jpg'));
+		image.stream().pipe(fs.createWriteStream('./images/'+image.title+"_by_"+image.copyright.text+'.jpg'));
 	});
 
 	console.log('saved ' + user + 's photos in images/');
