@@ -13,14 +13,14 @@ Install
 Example
 -------
 
-	```javascript
-	var client = new require('node-deviantart').Client,
+```javascript
+var client = new require('node-deviantart').Client,
 
-	client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
-		if(err) throw err;
-		console.dir(data);
-	});
-    ´´´´
+client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
+	if(err) throw err;
+	console.dir(data);
+});
+```
 
 
 Testing
