@@ -1,6 +1,6 @@
-var RSSClient = require('./client/RSSClient');
+import {RSSClient as Client} from './client/RSSClient'
 
 if(process.env.NODE_ENV == "dev")
-	require('longjohn');
+	require('longjohn')
 
-module.exports.RSSClient = RSSClient;
+export {Client}

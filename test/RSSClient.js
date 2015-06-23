@@ -3,10 +3,10 @@ var da = require('../');
 describe('RSSClient', function(){
 
   describe('#submissions()', function(){
-    
+
     it('should retrieve array without error', function(done){
 
-      var client = new da.RSSClient('emilkje');
+      var client = new da.Client('emilkje');
       client.submissions(function(err, data){
         if (err) throw err;
         if(data instanceof Array === false)
@@ -16,12 +16,12 @@ describe('RSSClient', function(){
     });
 
     it('should retrieve only images if option is specified', function(done){
-    	
-        var client = new da.RSSClient('emilkje');
+
+        var client = new da.Client('emilkje');
         client.submissions({type: 'image'}, function(err, data){
-    		
+
     		if(err) throw err;
-    		
+
     		data.forEach(function(i){
     			if(i.hasOwnProperty('content') === false)
     				throw new Error('No content attribute found');
@@ -36,11 +36,11 @@ describe('RSSClient', function(){
     it('should retrieve only notes if option is specified', function(done){
         this.timeout(3000);
 
-        var client = new da.RSSClient('MoonheartThunderClan');
+        var client = new da.Client('MoonheartThunderClan');
     	client.submissions({type: 'note'}, function(err, data){
-    		
+
     		if(err) throw err;
-    		
+
     		data.forEach(function(i){
     			if(i.hasOwnProperty('text') === false)
     				throw new Error('No content attribute found');
@@ -49,10 +49,10 @@ describe('RSSClient', function(){
     	});
     });
 
-	
+
 	it('should return empty array if results are not found', function(done) {
-        
-        var client = new da.RSSClient('emilkje');
+
+        var client = new da.Client('emilkje');
 		client.submissions({type: 'note'}, function(err, data){
 			if(err) throw err;
 			if(data.length > 0)
@@ -63,7 +63,7 @@ describe('RSSClient', function(){
 	});
 
 	it('should return items with a set of defined attributes', function(done) {
-		var client = new da.RSSClient('emilkje');
+		var client = new da.Client('emilkje');
         client.submissions(function(err, data){
 			if(err) throw err;
 			data.forEach(function(item){
@@ -83,7 +83,7 @@ describe('RSSClient', function(){
 
     it('should throw error if no username is specified in client constructor or as option', function(done){
 
-        var client = new da.RSSClient();
+        var client = new da.Client();
         client.submissions(function(err, data){
             if(!err)
                 throw new Error('Client does not return error if no username is specified');
@@ -99,7 +99,7 @@ describe('RSSClient', function(){
   describe('#images()', function(){
 
     it('should retrieve only images', function(done){
-      var client = new da.RSSClient('emilkje');
+      var client = new da.Client('emilkje');
       client.images(function(err, images){
         if (err) throw err;
         if(images instanceof Array === false)
@@ -114,7 +114,7 @@ describe('RSSClient', function(){
     });
 
     it('should attach content stream accessed by stream()', function(done){
-        var client = new da.RSSClient('emilkje');
+        var client = new da.Client('emilkje');
         var EventEmitter = require('events').EventEmitter;
         client.images(function(err, images){
             if(err) throw err;
