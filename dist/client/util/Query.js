@@ -7,6 +7,10 @@ exports['default'] = query;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _request_api = require('./request_api');
 
 var _request_api2 = _interopRequireDefault(_request_api);
@@ -14,10 +18,6 @@ var _request_api2 = _interopRequireDefault(_request_api);
 var _submission_filter = require('./submission_filter');
 
 var _submission_filter2 = _interopRequireDefault(_submission_filter);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
 
 var _dataSubmission = require('../data/submission');
 

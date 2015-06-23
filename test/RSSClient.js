@@ -3,7 +3,7 @@ var da = require('../');
 describe('RSSClient', function(){
 
   describe('#submissions()', function(){
-    
+
     it('should retrieve array without error', function(done){
 
       var client = new da.RSSClient('emilkje');
@@ -16,12 +16,12 @@ describe('RSSClient', function(){
     });
 
     it('should retrieve only images if option is specified', function(done){
-    	
+
         var client = new da.RSSClient('emilkje');
         client.submissions({type: 'image'}, function(err, data){
-    		
+
     		if(err) throw err;
-    		
+
     		data.forEach(function(i){
     			if(i.hasOwnProperty('content') === false)
     				throw new Error('No content attribute found');
@@ -38,9 +38,9 @@ describe('RSSClient', function(){
 
         var client = new da.RSSClient('MoonheartThunderClan');
     	client.submissions({type: 'note'}, function(err, data){
-    		
+
     		if(err) throw err;
-    		
+
     		data.forEach(function(i){
     			if(i.hasOwnProperty('text') === false)
     				throw new Error('No content attribute found');
@@ -49,9 +49,9 @@ describe('RSSClient', function(){
     	});
     });
 
-	
+
 	it('should return empty array if results are not found', function(done) {
-        
+
         var client = new da.RSSClient('emilkje');
 		client.submissions({type: 'note'}, function(err, data){
 			if(err) throw err;

@@ -17,12 +17,12 @@ export default function request_api (query, optionsOrCb, cb){
 	if(typeof optionsOrCb === "function")
 		cb = optionsOrCb;
 
-	options.q = query;
+	options.q = query
 
 
-	var RssResource = URIParser.RssUri(options);
+	let RssResource = URIParser.RssUri(options)
 
-	var request_options = {
+	let request_options = {
 		url: RssResource,
 		headers: {
 			'User-Agent': 'deviantART node.js wrapper by emilkje'
@@ -36,9 +36,8 @@ export default function request_api (query, optionsOrCb, cb){
 		}
 
 		xmlParser.parseString(res.body.toString(), (err, data) => {
-			var channel = (data ? (data.hasOwnProperty('channel') ? data.channel : null) : null);
-			// this.emit('query', {query: query, url: request_options.url, response: channel});
-			cb(err, channel);
+			let channel = (data ? (data.hasOwnProperty('channel') ? data.channel : null) : null)
+			cb(err, channel, {query: query, url: request_options.url, response: channel})
 		});
 	});
 };

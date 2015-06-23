@@ -1,7 +1,7 @@
-import request_api from './request_api'
-import filters from './submission_filter'
-import _ from 'lodash'
-import Submission from '../data/submission'
+import _ 						from 'lodash'
+import request_api 	from './request_api'
+import filters 			from './submission_filter'
+import Submission 	from '../data/submission'
 
 export default function query(q, optionsOrCb, cb) {
 
@@ -22,10 +22,10 @@ export default function query(q, optionsOrCb, cb) {
 			//Apply type / submission medium filter
 			if(options.hasOwnProperty('type')) {
 				if(options.type === 'image') {
-					return filters.image(item);
+					return filters.image(item)
 				}
 				if(options.type === 'note')
-					return filters.note(item);
+					return filters.note(item)
 			}
 
 			return true;
@@ -33,10 +33,10 @@ export default function query(q, optionsOrCb, cb) {
 
 		var submissions = [];
 		items.forEach(function(raw_item){
-			var submission = new Submission(raw_item);
-			submissions.push(submission);
+			var submission = new Submission(raw_item)
+			submissions.push(submission)
 		});
 
-		cb(false, submissions);
+		cb(false, submissions)
 	});
 };

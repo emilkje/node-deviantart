@@ -51,8 +51,7 @@ function request_api(query, optionsOrCb, cb) {
 
 		xmlParser.parseString(res.body.toString(), function (err, data) {
 			var channel = data ? data.hasOwnProperty('channel') ? data.channel : null : null;
-			// this.emit('query', {query: query, url: request_options.url, response: channel});
-			cb(err, channel);
+			cb(err, channel, { query: query, url: request_options.url, response: channel });
 		});
 	});
 }
