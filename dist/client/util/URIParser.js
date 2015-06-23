@@ -27,7 +27,7 @@ function UriParser(options) {
 		query += 'boost%3Apopular+';
 	}
 
-	//Add actual query to the q var
+	//Add actual query to the q
 	query += options.q;
 
 	//Apply max age if sort type is "popular"

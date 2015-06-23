@@ -1,16 +1,16 @@
 
 export default function UriParser(options) {
 
-	var base = "http://backend.deviantart.com/rss.xml"
+	let base = "http://backend.deviantart.com/rss.xml"
 
-	var url = base
+	let url = base
 
 	//Add type
-	var type = options.querytype || 'deviation'
+	let type = options.querytype || 'deviation'
 	url += '?type='+type
 
 	//prepare query
-	var query = "&q="
+	let query = "&q="
 
 	options.sort = options.sort || {
 		type: 'popular',
@@ -21,7 +21,7 @@ export default function UriParser(options) {
 		query += "boost%3Apopular+"
 	}
 
-	//Add actual query to the q var
+	//Add actual query to the q
 	query += options.q
 
 
@@ -34,7 +34,7 @@ export default function UriParser(options) {
 	if(options.sort.type === "new")
 		query += "+sort%3Atime"
 
-	var meta = options.meta || 'all';
+	let meta = options.meta || 'all';
 	query += "+meta%3A" + meta
 
 	//add query

@@ -8,4 +8,4 @@ var _clientRSSClient = require('./client/RSSClient');
 
 if (process.env.NODE_ENV == 'dev') require('longjohn');
 
-exports.RSSClient = _clientRSSClient.RSSClient;
+exports.Client = _clientRSSClient.RSSClient;
