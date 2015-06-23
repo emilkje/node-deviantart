@@ -4,7 +4,8 @@
   "description": "DeviantArt API wrapper for node.js",
   "main": "dist/deviantart.js",
   "scripts": {
-    "test": "make test",
+    "build": "babel src --out-dir dist",
+    "test": "npm run build && make test",
     "start": "babel src --watch --out-dir dist"
   },
   "keywords": [
