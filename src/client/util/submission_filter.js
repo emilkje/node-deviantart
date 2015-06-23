@@ -1,12 +1,10 @@
-
-module.exports = {
+export default {
 
 	image: function(item) {
-		return item.hasOwnProperty('content') && item.content['$'].medium === 'image';
+		return item.hasOwnProperty('content') && item.content['$'].medium === 'image'
 	},
 
 	note: function(item) {
-		return item.hasOwnProperty('text');
+		return item.hasOwnProperty('text')
 	}
-
 }
