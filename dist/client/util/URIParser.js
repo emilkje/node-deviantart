@@ -7,9 +7,7 @@ exports['default'] = UriParser;
 
 function UriParser(options) {
 
-	var base = 'http://backend.deviantart.com/rss.xml';
-
-	var url = base;
+	var url = 'http://backend.deviantart.com/rss.xml';
 
 	//Add type
 	var type = options.querytype || 'deviation';

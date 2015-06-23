@@ -31,10 +31,7 @@ export default function request_api (query, optionsOrCb, cb){
 	}
 
 	request.get(request_options, (err, res) => {
-		if(err) {
-			cb(err, false)
-			return
-		}
+		if(err) { cb(err, false); return; }
 
 		xmlParser.parseString(res.body.toString(), (err, data) => {
 			let channel = (data ? (data.hasOwnProperty('channel') ? data.channel : null) : null)

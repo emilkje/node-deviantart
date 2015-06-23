@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -12,31 +13,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _request = require('request');
-
-var _request2 = _interopRequireDefault(_request);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _xml2js = require('xml2js');
-
-var _xml2js2 = _interopRequireDefault(_xml2js);
-
-var _xml2jsLibProcessors = require('xml2js/lib/processors');
-
-var _xml2jsLibProcessors2 = _interopRequireDefault(_xml2jsLibProcessors);
-
 var _events = require('events');
-
-var _dataSubmission = require('./data/submission');
-
-var _dataSubmission2 = _interopRequireDefault(_dataSubmission);
-
-var _utilURIParser = require('./util/URIParser');
-
-var _utilURIParser2 = _interopRequireDefault(_utilURIParser);
 
 var _utilQuery = require('./util/query');
 
@@ -60,8 +37,11 @@ var RSSClient = (function (_Emitter) {
 		this.username = username || false;
 
 		this.query = function (q, optionsOrCb, cb) {
+
 			var options = {};
+
 			if (typeof optionsOrCb === 'object') options = optionsOrCb;
+
 			if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
 			(0, _utilQuery2['default'])(q, options, cb);
@@ -74,7 +54,9 @@ var RSSClient = (function (_Emitter) {
 		this.images = function (optionsOrCb, cb) {
 
 			var options = {};
+
 			if (typeof optionsOrCb === 'object') options = optionsOrCb;
+
 			if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
 			options.type = 'image';

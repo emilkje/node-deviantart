@@ -1,9 +1,7 @@
 
 export default function UriParser(options) {
 
-	let base = "http://backend.deviantart.com/rss.xml"
-
-	let url = base
+	let url = "http://backend.deviantart.com/rss.xml"
 
 	//Add type
 	let type = options.querytype || 'deviation'

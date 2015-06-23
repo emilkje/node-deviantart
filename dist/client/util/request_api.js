@@ -46,8 +46,7 @@ function request_api(query, optionsOrCb, cb) {
 
 	_request2['default'].get(request_options, function (err, res) {
 		if (err) {
-			cb(err, false);
-			return;
+			cb(err, false);return;
 		}
 
 		xmlParser.parseString(res.body.toString(), function (err, data) {
