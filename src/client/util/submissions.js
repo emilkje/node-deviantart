@@ -15,7 +15,7 @@ export default function submissions (username, optionsOrCb, cb) {
 
 	if(!username) {
 		if(cb)
-		cb(new Error('No username specified, either pass as an option or instanciate client with username.', false)
+		cb(new Error('No username specified, either pass as an option or instanciate client with username.', false))
 
 		return;
 	}
