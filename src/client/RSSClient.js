@@ -11,11 +11,14 @@ export class RSSClient extends Emitter {
 		this.username = username || false
 
 		this.query = (q, optionsOrCb, cb) => {
+
 			let options = {}
+
 			if(typeof optionsOrCb === "object")
-				options = optionsOrCb
+			options = optionsOrCb
+
 			if(typeof optionsOrCb === "function")
-				cb = optionsOrCb
+			cb = optionsOrCb
 
 			query(q, options, cb);
 		}
@@ -27,10 +30,12 @@ export class RSSClient extends Emitter {
 		this.images = (optionsOrCb, cb) => {
 
 			let options = {}
+
 			if(typeof optionsOrCb === "object")
-				options = optionsOrCb
+			options = optionsOrCb
+
 			if(typeof optionsOrCb === "function")
-				cb = optionsOrCb
+			cb = optionsOrCb
 
 			options.type = 'image'
 

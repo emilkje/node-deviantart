@@ -37,8 +37,11 @@ var RSSClient = (function (_Emitter) {
 		this.username = username || false;
 
 		this.query = function (q, optionsOrCb, cb) {
+
 			var options = {};
+
 			if (typeof optionsOrCb === 'object') options = optionsOrCb;
+
 			if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
 			(0, _utilQuery2['default'])(q, options, cb);
@@ -51,7 +54,9 @@ var RSSClient = (function (_Emitter) {
 		this.images = function (optionsOrCb, cb) {
 
 			var options = {};
+
 			if (typeof optionsOrCb === 'object') options = optionsOrCb;
+
 			if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
 			options.type = 'image';
