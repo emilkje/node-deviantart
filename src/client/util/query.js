@@ -9,6 +9,7 @@ export default function query(q, optionsOrCb, cb) {
 
 	if(typeof optionsOrCb === "object")
 	options = optionsOrCb
+
 	if(typeof optionsOrCb === "function")
 	cb = optionsOrCb
 
