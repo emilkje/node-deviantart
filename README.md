@@ -22,6 +22,16 @@ client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
 });
 ```
 
+You can also attach you username directly to the client
+```javascript
+var client = new require('node-deviantart').Client('emilkje'),
+
+client.images(function(err, data){
+	if(err) throw err;
+	console.dir(data);
+});
+```
+
 
 Testing
 -------
