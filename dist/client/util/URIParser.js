@@ -1,6 +1,11 @@
 'use strict';
 
-function RssUriParser(options) {
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+exports['default'] = UriParser;
+
+function UriParser(options) {
 
 	var base = 'http://backend.deviantart.com/rss.xml';
 
@@ -42,7 +47,4 @@ function RssUriParser(options) {
 	return url;
 }
 
-module.exports = {
-
-	RssUri: RssUriParser
-};
+module.exports = exports['default'];

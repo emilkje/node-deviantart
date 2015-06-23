@@ -29,12 +29,13 @@ var xmlParser = new _xml2js2['default'].Parser({
 function request_api(query, optionsOrCb, cb) {
 
 	var options = {};
+
 	if (typeof optionsOrCb === 'object') options = optionsOrCb;
 	if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
 	options.q = query;
 
-	var RssResource = _URIParser2['default'].RssUri(options);
+	var RssResource = (0, _URIParser2['default'])(options);
 
 	var request_options = {
 		url: RssResource,
@@ -56,5 +57,4 @@ function request_api(query, optionsOrCb, cb) {
 	});
 }
 
-;
 module.exports = exports['default'];

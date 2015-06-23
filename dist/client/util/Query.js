@@ -26,6 +26,7 @@ var _dataSubmission2 = _interopRequireDefault(_dataSubmission);
 function query(q, optionsOrCb, cb) {
 
 	var options = {};
+
 	if (typeof optionsOrCb === 'object') options = optionsOrCb;
 	if (typeof optionsOrCb === 'function') cb = optionsOrCb;
 
@@ -58,5 +59,4 @@ function query(q, optionsOrCb, cb) {
 	});
 }
 
-;
 module.exports = exports['default'];

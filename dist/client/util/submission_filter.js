@@ -12,6 +12,5 @@ exports['default'] = {
 	note: function note(item) {
 		return item.hasOwnProperty('text');
 	}
-
 };
 module.exports = exports['default'];

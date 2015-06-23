@@ -5,15 +5,16 @@ import Submission 	from '../data/submission'
 
 export default function query(q, optionsOrCb, cb) {
 
-	let options = {};
+	let options = {}
+
 	if(typeof optionsOrCb === "object")
-		options = optionsOrCb;
+		options = optionsOrCb
 	if(typeof optionsOrCb === "function")
-		cb = optionsOrCb;
+		cb = optionsOrCb
 
 	request_api(q, options, function(err, data) {
 		if(err) {
-			cb(err, false);
+			cb(err, false)
 			return;
 		}
 
@@ -38,5 +39,5 @@ export default function query(q, optionsOrCb, cb) {
 		});
 
 		cb(false, submissions)
-	});
-};
+	})
+}

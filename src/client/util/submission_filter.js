@@ -7,5 +7,4 @@ export default {
 	note: function(item) {
 		return item.hasOwnProperty('text')
 	}
-
 }
