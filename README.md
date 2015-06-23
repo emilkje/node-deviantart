@@ -13,13 +13,14 @@ Install
 Example
 -------
 
-	var deviantart = require('deviantart'),
-	client = new deviantart.RSSClient;
+	```javascript
+	var client = new require('node-deviantart').Client,
 
 	client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
 		if(err) throw err;
 		console.dir(data);
 	});
+    ´´´´
 
 
 Testing
