@@ -1,10 +1,5 @@
-import request 		from 'request'
-import _ 					from 'lodash'
-import xml2js  		from 'xml2js'
-import processors from 'xml2js/lib/processors'
+/* @flow */
 import {EventEmitter as Emitter} 	from 'events'
-import Submission from './data/submission'
-import URIParser 	from './util/URIParser'
 import query 			from './util/query'
 import request_api from './util/request_api'
 import submissions from './util/submissions'
@@ -12,11 +7,11 @@ import submissions from './util/submissions'
 export class RSSClient extends Emitter {
 
 	constructor(username) {
-		var emitter = super()
+		let emitter = super()
 		this.username = username || false
 
 		this.query = (q, optionsOrCb, cb) => {
-			var options = {}
+			let options = {}
 			if(typeof optionsOrCb === "object")
 				options = optionsOrCb
 			if(typeof optionsOrCb === "function")
@@ -31,7 +26,7 @@ export class RSSClient extends Emitter {
 
 		this.images = (optionsOrCb, cb) => {
 
-			var options = {}
+			let options = {}
 			if(typeof optionsOrCb === "object")
 				options = optionsOrCb
 			if(typeof optionsOrCb === "function")

@@ -8,32 +8,31 @@ export default function query(q, optionsOrCb, cb) {
 	let options = {}
 
 	if(typeof optionsOrCb === "object")
-		options = optionsOrCb
+	options = optionsOrCb
 	if(typeof optionsOrCb === "function")
-		cb = optionsOrCb
+	cb = optionsOrCb
 
-	request_api(q, options, function(err, data) {
-		if(err) {
-			cb(err, false)
-			return;
-		}
+	request_api(q, options, (err, data) => {
 
-		let items = _.filter(data.item, function(item){
+		if(err) { cb(err, false); return; }
+
+		let items = _.filter(data.item, (item) => {
 
 			//Apply type / submission medium filter
 			if(options.hasOwnProperty('type')) {
-				if(options.type === 'image') {
-					return filters.image(item)
-				}
+
+				if(options.type === 'image')
+				return filters.image(item)
+
 				if(options.type === 'note')
-					return filters.note(item)
+				return filters.note(item)
 			}
 
-			return true;
+			return true
 		});
 
 		var submissions = [];
-		items.forEach(function(raw_item){
+		items.forEach((raw_item) => {
 			var submission = new Submission(raw_item)
 			submissions.push(submission)
 		});
