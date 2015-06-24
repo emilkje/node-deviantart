@@ -2,6 +2,10 @@
   "name": "node-deviantart",
   "version": "1.1.3",
   "description": "DeviantArt API wrapper for node.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emilkje/node-deviantart.git"
+  },
   "main": "dist/deviantart.js",
   "scripts": {
     "build": "babel src --out-dir dist",
@@ -15,7 +19,7 @@
   "author": "Emil Kjelsrud <emilkje@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xml2js": "~0.4.1",
+    "xml2js": "~0.4.9",
     "request": "~2.34.0",
     "lodash": "~2.4.1"
   },
