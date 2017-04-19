@@ -49,6 +49,62 @@ client.images((err, data) => {
 });
 ```
 
+## Submission Schema
+```json
+{
+  "title": "Image title",
+  "link": "http://username.deviantart.com/art/image-id",
+  "perma": "http://username.deviantart.com/art/image-id",
+  "pubdate": "Wed, 30 Jun 2010 11:55:43 PDT",
+  "keywords": [
+    ""
+  ],
+  "rating": "nonadult",
+  "category": {
+    "id": "digitalart/photomanip/conceptual",
+    "label": "Conceptual"
+  },
+  "credit": {
+    "username": "username",
+    "avatar": "http://a.deviantart.net/avatars/e/m/username.jpg?1",
+    "role": "author"
+  },
+  "copyright": {
+    "text": "Copyright 2010-2017 username",
+    "url": "http://username.deviantart.com"
+  },
+  "license": "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+  "description": {
+    "content": "Image description.",
+    "type": "html"
+  },
+  "thumbnail": {
+    "small": {
+      "url": "http://txx.deviantart.net/thumbnail-of-image.jpg",
+      "height": "150",
+      "width": "117"
+    },
+    "medium": {
+      "url": "http://txx.deviantart.net/thumbnail-of-image.jpg",
+      "height": "200",
+      "width": "156"
+    },
+    "large": {
+      "url": "http://txx.deviantart.net/thumbnail-of-image.jpg",
+      "height": "385",
+      "width": "300"
+    }
+  },
+  "content": {
+    "url": "http://orig05.deviantart.net/original-image-path.jpg",
+    "height": "800",
+    "width": "623",
+    "medium": "image"
+  },
+  "text": null
+}
+```
+
 Testing
 -------
 
