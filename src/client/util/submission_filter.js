@@ -1,10 +1,4 @@
 export default {
-
-	image: function(item) {
-		return item.hasOwnProperty('content') && item.content['$'].medium === 'image'
-	},
-
-	note: function(item) {
-		return item.hasOwnProperty('text')
-	}
+	image: item => item.hasOwnProperty('content') && item.content['$'].medium === 'image',
+	note: item => item.hasOwnProperty('text')
 }

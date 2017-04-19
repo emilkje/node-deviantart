@@ -9,7 +9,7 @@
   "main": "dist/deviantart.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "test": "npm run build && make test",
+    "test": "npm run build && mocha --reporter spec",
     "start": "babel src --watch --out-dir dist"
   },
   "keywords": [

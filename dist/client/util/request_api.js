@@ -30,8 +30,8 @@ function request_api(query, optionsOrCb, cb) {
 
 	var options = {};
 
-	if (typeof optionsOrCb === 'object') options = optionsOrCb;
-	if (typeof optionsOrCb === 'function') cb = optionsOrCb;
+	if (typeof optionsOrCb === "object") options = optionsOrCb;
+	if (typeof optionsOrCb === "function") cb = optionsOrCb;
 
 	options.q = query;
 

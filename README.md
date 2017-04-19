@@ -7,16 +7,17 @@ Work in progress.
 Install
 -------
 
-	npm install node-deviantart
+`npm install node-deviantart` or `yarn add node-deviantart`
 
 
 Example
 -------
 
 ```javascript
-var client = new require('node-deviantart').Client,
+import { Client } from 'node-deviantart';
+const client = new Client();
 
-client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
+client.submissions({username: 'emilkje', type: 'image'}, (err, data) => {
 	if(err) throw err;
 	console.dir(data);
 });
@@ -24,19 +25,34 @@ client.submissions({username: 'emilkje', type: 'image'}, function(err, data){
 
 You can also attach you username directly to the client
 ```javascript
-var client = new require('node-deviantart').Client('emilkje'),
+import { Client } from 'node-deviantart';
+const client = new Client('emilkje'),
 
-client.images(function(err, data){
+client.submissions({type: 'image'}, (err, data) => {
 	if(err) throw err;
 	console.dir(data);
 });
 ```
 
+Image data is accessible through the stream helper method on the submissions
+```javascript
+import { Client } from 'node-deviantart';
+import { createWriteStream } from 'fs';
+const client = new Client('emilkje'),
+
+// same as submissions({type: 'image'})
+client.images((err, data) => {
+	if(err) throw err;
+	data.forEach(image => {
+		image.stream.pipe(createWriteStream(`./images/${image.title}.jpg`));
+	});
+});
+```
 
 Testing
 -------
 
-	make test
+run `make test` or `npm run test`
 
 
 TODO:
@@ -44,7 +60,6 @@ TODO:
 
 * Improve RSSClient to handle single submissions (data streams etc.)
 * Add sta.sh client for uploads and asset management
-* Mock HTTP-requests in test cases (currently throws timesout on large requests)
+* Mock HTTP-requests in test cases (currently throws timeout on large responses)
 * Move options from submission() to query()
 * More documentation
-* More

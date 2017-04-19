@@ -1,7 +1,7 @@
-import _ 						from 'lodash'
-import request_api 	from './request_api'
-import filters 			from './submission_filter'
-import Submission 	from '../data/submission'
+import _ from 'lodash'
+import request_api from './request_api'
+import filters from './submission_filter'
+import Submission from '../data/submission'
 
 export default function query(q, optionsOrCb, cb) {
 

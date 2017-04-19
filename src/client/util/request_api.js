@@ -1,6 +1,6 @@
 import xml2js, {processors} from 'xml2js'
-import URIParser 						from './URIParser'
-import request 							from 'request'
+import URIParser from './URIParser'
+import request from 'request'
 
 let xmlParser = new xml2js.Parser({
 	explicitRoot: false,

@@ -27,9 +27,9 @@ function query(q, optionsOrCb, cb) {
 
 	var options = {};
 
-	if (typeof optionsOrCb === 'object') options = optionsOrCb;
+	if (typeof optionsOrCb === "object") options = optionsOrCb;
 
-	if (typeof optionsOrCb === 'function') cb = optionsOrCb;
+	if (typeof optionsOrCb === "function") cb = optionsOrCb;
 
 	(0, _request_api2['default'])(q, options, function (err, data) {
 
